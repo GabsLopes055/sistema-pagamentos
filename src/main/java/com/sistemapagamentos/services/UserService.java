@@ -1,12 +1,16 @@
 package com.sistemapagamentos.services;
 
+import com.sistemapagamentos.DTOs.response.UserResponse;
 import com.sistemapagamentos.Utils.RandomString;
 import com.sistemapagamentos.config.SecurityConfig;
 import com.sistemapagamentos.entity.User;
 import com.sistemapagamentos.repository.UserRepository;
 import com.sistemapagamentos.services.Exceptions.EmailInUse;
+import jakarta.mail.MessagingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class UserService {
@@ -15,12 +19,15 @@ public class UserService {
 
     private final SecurityConfig encoder;
 
-    private UserService(UserRepository repository, SecurityConfig encoder) {
+    private final MailService mailService;
+
+    private UserService(UserRepository repository, SecurityConfig encoder, MailService mailService) {
         this.repository = repository;
         this.encoder = encoder;
+        this.mailService = mailService;
     }
 
-    public User registerUser(User user) {
+    public UserResponse registerUser(User user) throws MessagingException, UnsupportedEncodingException {
 
         if(repository.findByEmail(user.getEmail()) != null)
             throw new EmailInUse("Email: " + user.getEmail() + " já esta em uso");
@@ -33,10 +40,29 @@ public class UserService {
 
             user.setEnabled(false);
 
+            mailService.verificationMail(user);
+
             User userSaved = repository.save(user);
 
-            return userSaved;
+
+            return UserResponse.toModel(userSaved);
         }
+
+    }
+
+    public boolean verifyAccount(String verifyCode) {
+
+        User verifyUser = repository.findByVerificationCode(verifyCode);
+
+        if(verifyUser == null || verifyUser.isEnabled()) {
+            return false;
+        } else {
+            verifyUser.setVerificationCode(null);
+            verifyUser.setEnabled(true);
+            repository.save(verifyUser);
+            return true;
+        }
+
 
     }
 

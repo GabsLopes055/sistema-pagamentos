@@ -1,6 +1,10 @@
-package com.sistemapagamentos.DTOs;
+package com.sistemapagamentos.DTOs.request;
 
 import com.sistemapagamentos.entity.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,10 +12,18 @@ import lombok.Setter;
 @Setter
 public class UserRequest {
 
+    @NotNull(message = "O campo nome esta ausente")
+    @NotBlank(message = "O campo nome não pode ser vazio")
     private String name;
 
+    @NotNull(message = "O campo email esta ausente")
+    @NotBlank(message = "O campo email não pode ser vazio")
+    @Email(message = "E-mail inválido")
     private String email;
 
+    @NotNull(message = "O campo password esta ausente")
+    @NotBlank(message = "O campo password não pode ser vazio")
+    @Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres")
     private String password;
 
     public String getName() {

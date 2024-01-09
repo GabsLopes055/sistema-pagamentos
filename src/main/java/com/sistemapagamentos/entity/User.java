@@ -30,6 +30,10 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

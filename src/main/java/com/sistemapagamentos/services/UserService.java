@@ -2,12 +2,11 @@ package com.sistemapagamentos.services;
 
 import com.sistemapagamentos.DTOs.response.UserResponse;
 import com.sistemapagamentos.Utils.RandomString;
-import com.sistemapagamentos.config.SecurityConfig;
+import com.sistemapagamentos.config.security.SecurityConfig;
 import com.sistemapagamentos.entity.User;
 import com.sistemapagamentos.repository.UserRepository;
 import com.sistemapagamentos.services.Exceptions.EmailInUse;
 import jakarta.mail.MessagingException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;

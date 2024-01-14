@@ -6,7 +6,6 @@ import com.sistemapagamentos.entity.User;
 import com.sistemapagamentos.services.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +17,13 @@ public class UserController {
 
     private final UserService service;
 
+
+
     UserController(UserService service){
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping(value = "/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody @Valid UserRequest request) throws MessagingException, UnsupportedEncodingException {
         User user = request.toModel(request);
         return ResponseEntity.ok().body(service.registerUser(user));
@@ -36,6 +37,15 @@ public class UserController {
             return "Falha ao verificar conta do usuário";
         }
     }
+
+    @GetMapping(value = "/teste")
+    public String teste() {
+        return "Você esta logado";
+    }
+
+
+
+
 
 
 

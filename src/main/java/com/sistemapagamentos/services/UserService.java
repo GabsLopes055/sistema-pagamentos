@@ -32,7 +32,7 @@ public class UserService {
             throw new EmailInUse("Email: " + user.getEmail() + " já esta em uso");
         else {
 
-            user.setPassword(encoder.encoderPassword().encode(user.getPassword()));
+            user.setPassword(encoder.passwordEncoder().encode(user.getPassword()));
 
             String randomCode = RandomString.generateRandomString(64);
             user.setVerificationCode(randomCode);

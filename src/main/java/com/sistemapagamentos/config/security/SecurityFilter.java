@@ -33,32 +33,26 @@ public class SecurityFilter  extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         var token = this.recoverToken(request);
-
-        if(token != null) {
-
+        if (token != null){
             var subject = tokenService.validateToken(token);
+            UserDetails user = repository.findByEmail(subject);
 
-            UserDetails userDetails = repository.findByEmail(subject);
-
-            var authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(
+                    user, null, user.getAuthorities()
+            );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
         }
-
         filterChain.doFilter(request, response);
-
     }
 
     private String recoverToken(HttpServletRequest request) {
-
         var authHeader = request.getHeader("Authorization");
-
-        if(authHeader == null) {
+        if(authHeader == null){
             return null;
-        } else {
-            System.out.println(authHeader.replace("Bearer ", ""));
+        }else {
             return authHeader.replace("Bearer ", "");
         }
+
     }
 }

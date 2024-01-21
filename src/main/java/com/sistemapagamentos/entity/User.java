@@ -30,6 +30,8 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
+    private String roles;
+
     public UUID getId() {
         return id;
     }
@@ -101,9 +103,10 @@ public class User implements UserDetails {
         return this.enabled;
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roles = role;
     }
 }

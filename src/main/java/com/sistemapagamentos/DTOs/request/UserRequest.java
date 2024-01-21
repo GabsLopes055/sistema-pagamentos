@@ -26,6 +26,11 @@ public class UserRequest {
     @Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres")
     private String password;
 
+    @NotNull(message = "O campo password esta ausente")
+    @NotBlank(message = "O campo password não pode ser vazio")
+    private String role;
+
+
     public String getName() {
         return name;
     }
@@ -50,7 +55,15 @@ public class UserRequest {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public User toModel(UserRequest request) {
-        return new User(request.getName(), request.getEmail(), request.getPassword());
+        return new User(request.getName(), request.getEmail(), request.getPassword(), request.role);
     }
 }

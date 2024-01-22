@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/v1/auth")
 public class LoginController {
 
 
@@ -38,6 +38,7 @@ public class LoginController {
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
         AuthenticationResponse response = new AuthenticationResponse();
+
         response.toModelToken(token);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);

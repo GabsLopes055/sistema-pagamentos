@@ -26,6 +26,7 @@ public class PixService {
 
     @Value("${CLIENT_SECRET}")
     private String clientSecret;
+
     public JSONObject pixCreateEVP(){
 
         JSONObject options = configuringJsonObject();
@@ -58,6 +59,7 @@ public class PixService {
         body.put("chave", pixChargeRequest.getChave());
 
         JSONArray infoAdicionais = new JSONArray();
+
         infoAdicionais.put(new JSONObject().put("nome", "Campo 1").put("valor", "Informação Adicional1 do PSP-Recebedor"));
         infoAdicionais.put(new JSONObject().put("nome", "Campo 2").put("valor", "Informação Adicional2 do PSP-Recebedor"));
         body.put("infoAdicionais", infoAdicionais);
@@ -114,7 +116,6 @@ public class PixService {
 
 
     private JSONObject configuringJsonObject(){
-
         Credentials credentials = new Credentials();
 
         JSONObject options = new JSONObject();
@@ -122,8 +123,6 @@ public class PixService {
         options.put("client_secret", clientSecret);
         options.put("certificate", credentials.getCertificate());
         options.put("sandbox", credentials.isSandbox());
-
-        System.out.println(options);
 
         return options;
     }

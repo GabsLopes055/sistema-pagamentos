@@ -19,7 +19,7 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    private String verifyURL = "http://localhost:8080/user/verify?code=";
+    private String verifyURL = "http://localhost:8080/api/v1/user/verify?code=";
 
     public void verificationMail(User userRequest) throws MessagingException, UnsupportedEncodingException {
 

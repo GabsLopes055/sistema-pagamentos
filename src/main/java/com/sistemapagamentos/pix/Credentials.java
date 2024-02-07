@@ -15,7 +15,6 @@ public class Credentials {
     private boolean debug;
 
     public Credentials() {
-
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream credentialsFile = classLoader.getResourceAsStream("credentials.json");
         JSONTokener tokener = new JSONTokener(credentialsFile);
